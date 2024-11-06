@@ -25,6 +25,7 @@
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },
   "win": {
+    "icon": "./dist/icons/win/icon.ico",
     "target": [
       {
         "target": "nsis",
@@ -33,13 +34,17 @@
         ]
       }
     ],
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    "artifactName": "${productName}-win-${version}-portable.${ext}"
   },
   "nsis": {
+    "installerIcon": "./dist/icons/win/setup.ico",
+    "uninstallerIcon": "./dist/icons/win/uninstall.ico",
+    "artifactName": "${productName}-win-${version}-setup.${ext}",
     "oneClick": false,
     "perMachine": false,
-    "allowToChangeInstallationDirectory": true,
-    "deleteAppDataOnUninstall": false
+    "allowToChangeInstallationDirectory": false,
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": true
   },
   "linux": {
     "target": [

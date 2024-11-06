@@ -1,43 +1,58 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, reactive } from 'vue';
 import { DeleteOutlined, MenuFoldOutlined, PlusOutlined, MinusOutlined, CheckOutlined, QuestionOutlined, SaveOutlined, FolderOpenOutlined } from '@ant-design/icons-vue';
-import { useTitle } from '@vueuse/core'
+import { useTitle } from '@vueuse/core';
+import { useHelpers } from '../helpers';
 
-const emptyHome = {
-  id: null,
-  home: {
-    path: '',
-    url: '',
-    title: '',
-    rates: [] as any[],
-    description: '',
-    amenities: [] as any[],
-    summary: [] as any[],
-    photos: [] as any[],
-  },
-  name: '',
-  status: '',
-};
-const properties = ref([])
-const status = ref('')
-const savedir = ref(null)
-const loopstatus = ref('')
-const errors = ref('')
+const { emptyHome, columns } = useHelpers();
+const properties = ref([]);
+const status = ref('');
+const savedir = ref(null);
+const loopstatus = ref('');
+const errors = ref('');
 const loading = ref(false);
 const drawer = ref(false);
+const loop = ref(10);
 const drawerHome = reactive({...emptyHome});
 
 const title = computed(() => !status.value ? 'Home Ex' : "Home Ex - " + status.value);
-
 useTitle(title);
 
-defineProps<{ msg: string }>()
+// ########### Watchers ###########
+watch(loop, (newloop: number) => {
+  window.ipcRenderer.send('set-loop', newloop);
+  setTimeout(() => {
+    sendCommand('loops');
+  }, 100);
+});
 
-function sendCommand(command: string) {
+// ########### Functions ###########
+const increment = () => {
+  if(loop.value >= 200) return;
+
+  loop.value = loop.value + 10;
+};
+const decrement = () => {
+  if(loop.value <= 10) return;
+  loop.value = loop.value - 10;
+};
+const openDir = ({dir, url}: any) => {
+  window.ipcRenderer.send('open-dir', {dir, url});
+};
+const viewHome = (home: any) => {
+  Object.assign(drawerHome, home);
+  drawer.value = true;
+
+
+};
+const viewHomeClose = () => {
+  Object.assign(drawerHome, emptyHome);
+  drawer.value = false;
+};
+const sendCommand = (command: string) => {
   window.ipcRenderer.send('command', command)
-}
-
-function deleteHome(home: any) {
+};
+const deleteHome = (home: any) => {
   if(home.home === null) {
     const { id, name }: any = home;
     window.ipcRenderer.send('delete-home', { id, title: name, path: null });
@@ -45,13 +60,12 @@ function deleteHome(home: any) {
     const { id, home: { photos, title } } = home;
     window.ipcRenderer.send('delete-home', { id, title, path: photos[0].path });
   }
-
-}
-
-function setSaveDir() {
+};
+const setSaveDir = () => {
   window.ipcRenderer.send('set-dir', 'set-dir')
-}
+};
 
+// ########### On Mounted ###########
 onMounted(() => {
   window.ipcRenderer.send('check-db', null);
   window.ipcRenderer.send('set-loop', loop.value);
@@ -77,41 +91,6 @@ onMounted(() => {
     errors.value = args
   })
 
-})
-
-const columns = [ { width: 120, title: '# ID', dataIndex: 'id', }, { width: 250, title: 'Name', resizable: true, dataIndex: 'name', }, { width: 'auto', title: 'URL', dataIndex: 'url', ellipsis: true,}, { width: 110, title: 'Status', dataIndex: 'status', resizable: true, }, { width: 200, title: 'Created', dataIndex: 'created', }, { width: '150px', title: 'Actions', dataIndex: 'actions', }];
-
-const loop = ref(10);
-
-const increment = () => {
-  if(loop.value >= 200) return;
-
-  loop.value = loop.value + 10;
-};
-const decrement = () => {
-  if(loop.value <= 10) return;
-  loop.value = loop.value - 10;
-};
-const openDir = ({dir, url}: any) => {
-  window.ipcRenderer.send('open-dir', {dir, url});
-};
-const viewHome = (home: any) => {
-  Object.assign(drawerHome, home);
-  drawer.value = true;
-
-
-};
-
-const viewHomeClose = () => {
-  Object.assign(drawerHome, emptyHome);
-  drawer.value = false;
-};
-
-watch(loop, (newloop: number) => {
-  window.ipcRenderer.send('set-loop', newloop);
-  setTimeout(() => {
-    sendCommand('loops');
-  }, 100);
 });
 </script>
 
@@ -189,8 +168,6 @@ watch(loop, (newloop: number) => {
       </span>
     </template>
   </a-table>
-
-
   <a-drawer
       v-model:open="drawer"
       class="custom-class"
@@ -224,12 +201,8 @@ watch(loop, (newloop: number) => {
     </div>
   </a-drawer>
 </template>
-
-<style scoped >
+<style scoped>
 div.drawer-content p {
   margin-bottom: 10px;
-}
-.read-the-docs {
-  color: #888;
 }
 </style>

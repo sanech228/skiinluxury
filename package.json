@@ -1,6 +1,6 @@
 {
   "name": "homeex",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist-electron/main/index.js",
   "description": "Property scraper for VillaGetaways.com",
   "author": "Sane <sanech228@gmail.com>",
@@ -21,10 +21,11 @@
   },
   "type": "module",
   "scripts": {
-    "dev": "npm run icon && vite",
+    "dev": "vite",
     "icon": "eib  -i public/logo.png -o public/icons",
-    "build": "npm run icon &&  && vite build",
-    "build:win": "npm run icon && vite build && electron-builder --win --x64",
+    "build": "vite build && electron-builder --win --x64",
+    "build:all": "vite build",
+    "build:win": "vite build && electron-builder --win --x64",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -35,6 +36,7 @@
     "ant-design-vue": "^4.2.5",
     "axios": "^1.7.7",
     "cheerio": "^1.0.0",
+    "electron-store": "^10.0.0",
     "electron-updater": "^6.3.9",
     "node-machine-id": "^1.1.12",
     "request": "^2.88.2"
@@ -54,5 +56,6 @@
     "vite-plugin-electron-renderer": "^0.14.6",
     "vue": "^3.5.12",
     "vue-tsc": "^2.1.10"
-  }
+  },
+  "packageManager": "pnpm@9.12.3+sha512.cce0f9de9c5a7c95bef944169cc5dfe8741abfb145078c0d508b868056848a87c81e626246cb60967cbd7fd29a6c062ef73ff840d96b3c86c40ac92cf4a813ee"
 }

@@ -1,27 +1,43 @@
-import { app, BrowserWindow, ipcMain, shell, dialog, protocol, net  } from 'electron'
-import { createRequire } from 'node:module'
-import os from 'node:os'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
-import { useScraper } from '../preload/scraper'
-import db from '@alinsme/electron-db'
+import { app, BrowserWindow, ipcMain, shell, dialog, protocol, net } from 'electron';
+import { createRequire } from 'node:module';
+import os from 'node:os';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { useScraper } from '../preload/scraper';
+import db from '@alinsme/electron-db';
 import {rmSync} from "node:fs";
+import Store from 'electron-store';
+//@ts-ignore
+// import appIcon from '../../dist/icons/win/icon.ico?asset'
 // Electron Builder
 import AnyStack from '@anystack/electron-license';
 import { getAutoUpdater } from '../preload/autoupdater';
-const server = 'https://dist.anystack.sh/v1/electron'
-const productId = '9d6b6d63-a3f2-47f6-bf5c-a1cc0ac6a63e'
+// End imports
 
-const key = 'FvoQ177b9nIz5FM3ygbhQJQQcfyojBPO';
-const url = `${server}/${productId}/releases`
+
+const productId = import.meta.env.VITE_APP_ANYSTACK_PRODUCT_ID;
+const key = import.meta.env.VITE_APP_ANYSTACK_API_KEY;
+const url = import.meta.env.VITE_APP_ANYSTACK_URL;
 
 const autoUpdater = getAutoUpdater();
+const store = new Store();
+// const require = createRequire(import.meta.url)
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+Object.defineProperty(app, 'isPackaged', {
+  get() {
+    return true;
+  }
+});
+// const preload = path.join(__dirname, '../preload/index.mjs')
+const icon = path.join(__dirname, '../../dist/icons/win/icon.ico');
+
 
 autoUpdater.setFeedURL({
-  url: url,
+  url,
   //@ts-ignore
   serverType: 'json',
-  provider: "generic",
+  provider: 'generic',
   useMultipleRangeRequest: false
 })
 
@@ -68,13 +84,12 @@ const Anystack = new AnyStack(
 );
 
 
-const require = createRequire(import.meta.url)
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
 
 process.env.APP_ROOT = path.join(__dirname, '../..')
 
 var totalLoops = 10;
-var savedir = null;
+var savedir = store.get('filepath') || null;
 
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
@@ -115,10 +130,10 @@ const indexHtml = path.join(RENDERER_DIST, 'index.html')
 async function createWindow() {
   win = new BrowserWindow({
     width: 1280,
-    height: 900,
+    height: 950,
     title: 'Main window',
     show: false,
-    icon: 'icons/win/icon.ico',
+    icon,
     webPreferences: {
       preload,
       //Warning: Enable nodeIntegration and disable contextIsolation is not secure in production
@@ -135,21 +150,22 @@ async function createWindow() {
     win.loadURL(VITE_DEV_SERVER_URL)
     win.webContents.openDevTools()
   } else {
-    try {
-      autoUpdater.checkForUpdatesAndNotify();
-    } catch (error) {
-      console.log('autoUpdater:', error.message);
-    }
+    // try {
+    //   await autoUpdater.checkForUpdatesAndNotify();
+    // } catch (error) {
+    //   console.log('autoUpdater:', error.message);
+    // }
     win.setMenu(null);
     win.loadFile(indexHtml);
+
+    //Anystack.ifAuthorized(win);
   }
 
   win.on('ready-to-show', function() {
     Anystack.ifAuthorized(win);
   });
 
-  app.show();
-
+  //app.show();
   // Test actively push message to the Electron-Renderer
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', new Date().toLocaleString())
@@ -237,11 +253,8 @@ ipcMain.on('set-dir', (event, args) => {
   }).then(({ filePaths }) => {
     if(filePaths && filePaths.length === 1) {
       savedir = filePaths[0];
+      store.set('filepath', savedir);
       event.sender.send('status', `Saving photos to ${savedir}`);
-      event.sender.send('dir-set', savedir);
-    } else {
-      savedir = null;
-      event.sender.send('status', 'Cancelled.');
       event.sender.send('dir-set', savedir);
     }
   });
@@ -250,6 +263,13 @@ ipcMain.on('set-dir', (event, args) => {
 
 
 ipcMain.on('check-db', (event, args) => {
+  const version = app.getVersion();
+  event.sender.send('set-version', `v${version}`);
+
+  if(savedir !== null || savedir !== '' && savedir !== undefined) {
+    event.sender.send('dir-set', savedir);
+    //console.log(`Dir is set to ${savedir}`);
+  }
   event.sender.send('status','Creating database');
   const location = app.getPath("userData");
   db.createTable('properties', location, (succ, msg) => {
