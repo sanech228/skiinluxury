@@ -4,6 +4,13 @@
   "appId": "com.myapp.homeex",
   "asar": true,
   "productName": "HomeEx",
+  "extraResources": [
+    {
+      from: "./node_modules/@anystack/electron-license/license",
+      to: "license",
+      filter: "**/*"
+    }
+  ],
   "directories": {
     "output": "release/${version}"
   },

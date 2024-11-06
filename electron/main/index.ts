@@ -6,6 +6,66 @@ import { fileURLToPath } from 'node:url'
 import { useScraper } from '../preload/scraper'
 import db from '@alinsme/electron-db'
 import {rmSync} from "node:fs";
+// Electron Builder
+import AnyStack from '@anystack/electron-license';
+import { getAutoUpdater } from '../preload/autoupdater';
+const server = 'https://dist.anystack.sh/v1/electron'
+const productId = '9d6b6d63-a3f2-47f6-bf5c-a1cc0ac6a63e'
+
+const key = 'FvoQ177b9nIz5FM3ygbhQJQQcfyojBPO';
+const url = `${server}/${productId}/releases`
+
+const autoUpdater = getAutoUpdater();
+
+autoUpdater.setFeedURL({
+  url: url,
+  //@ts-ignore
+  serverType: 'json',
+  provider: "generic",
+  useMultipleRangeRequest: false
+})
+
+
+const Anystack = new AnyStack(
+    {
+      api: {
+        key,
+        productId,
+      },
+      license: {
+        encryptionKey: 'UNIQUE-KEY',
+        trial: {
+          "enabled": true,
+          "value": 7,
+          "unit": "days"
+        }
+      },
+      "prompt":{
+        "title":"HomeEx",
+        "subtitle":"Activate your license to get started",
+        "logo":"https://anystack.sh/img/emblem.svg",
+        "email":"Email address",
+        "licenseKey":"License key",
+        "activateLicense":"Activate license",
+        "trial":"Try HomeEx for 7 days",
+        "trialExpired":"Thank you for trying HomeEx. Your trial has expired; to continue, please purchase a license.",
+        "errors":{
+          "NOT_FOUND":"Your license information did not match our records.",
+          "SUSPENDED":"Your license has been suspended.",
+          "EXPIRED":"Your license has been expired.",
+          "FINGERPRINT_INVALID":"No license was found for this device.",
+          "FINGERPRINT_ALREADY_EXISTS":"An active license already exists for this device.",
+          "MAX_USAGE_REACHED":"Your license has reached its activation limit.",
+          "RELEASE_CONSTRAINT":"Your license has no access to this version."
+        }
+      },
+      "confirmation":{
+        "title":"You are awesome!",
+        "subtitle":"Thank you for activating your product license."
+      }
+    },
+    autoUpdater
+);
 
 
 const require = createRequire(import.meta.url)
@@ -47,7 +107,8 @@ protocol.registerSchemesAsPrivileged([
   }
 ]);
 
-let win: BrowserWindow | null = null
+let win: BrowserWindow | null = null;
+
 const preload = path.join(__dirname, '../preload/index.mjs')
 const indexHtml = path.join(RENDERER_DIST, 'index.html')
 
@@ -68,14 +129,26 @@ async function createWindow() {
       //contextIsolation: false,
     },
   });
-  win.on('ready-to-show', win.show);
+
+
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL)
     win.webContents.openDevTools()
   } else {
+    try {
+      autoUpdater.checkForUpdatesAndNotify();
+    } catch (error) {
+      console.log('autoUpdater:', error.message);
+    }
     win.setMenu(null);
-    win.loadFile(indexHtml)
+    win.loadFile(indexHtml);
   }
+
+  win.on('ready-to-show', function() {
+    Anystack.ifAuthorized(win);
+  });
+
+  app.show();
 
   // Test actively push message to the Electron-Renderer
   win.webContents.on('did-finish-load', () => {
@@ -95,7 +168,6 @@ app.whenReady().then(() => {
     const pathToMedia = new URL(req.url).pathname;
     return net.fetch(`file://${pathToMedia}`);
   });
-
   createWindow()
 })
 
