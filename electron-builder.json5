@@ -1,0 +1,55 @@
+// @see https://www.electron.build/configuration/configuration
+{
+  "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
+  "appId": "com.myapp.skiinluxury",
+  "asar": true,
+  "productName": "SkiInLuxury",
+  "extraResources": [
+    {
+      from: "./node_modules/@anystack/electron-license/license",
+      to: "license",
+      filter: "**/*"
+    }
+  ],
+  "directories": {
+    "output": "release/${version}"
+  },
+  "files": [
+    "dist",
+    "dist-electron"
+  ],
+  "mac": {
+    "target": [
+      "dmg"
+    ],
+    "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
+  },
+  "win": {
+    "icon": "./dist/icons/win/icon.ico",
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "artifactName": "${productName}-win-${version}-portable.${ext}"
+  },
+  "nsis": {
+    "installerIcon": "./dist/icons/win/setup.ico",
+    "uninstallerIcon": "./dist/icons/win/uninstall.ico",
+    "artifactName": "${productName}-win-${version}-setup.${ext}",
+    "oneClick": false,
+    "perMachine": false,
+    "allowToChangeInstallationDirectory": false,
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": true
+  },
+  "linux": {
+    "target": [
+      "AppImage"
+    ],
+    "artifactName": "${productName}-Linux-${version}.${ext}"
+  }
+}
