@@ -1,9 +1,9 @@
 // @see https://www.electron.build/configuration/configuration
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "com.myapp.homeex",
+  "appId": "com.myapp.skiinluxury",
   "asar": true,
-  "productName": "HomeEx",
+  "productName": "Ski In Luxury",
   "extraResources": [
     {
       from: "./node_modules/@anystack/electron-license/license",

@@ -1,35 +1,11 @@
-import request from 'request';
-import fs from 'fs';
-import { dialog } from 'electron';
-import {basename, dirname, sep} from 'node:path';
-import { existsSync, mkdirSync, createWriteStream, rmSync } from 'node:fs';
-import * as cheerio from 'cheerio';
 import axios from "axios";
-
-interface Link {
-    id?: number;
-    name: string;
-    url: string;
-    status: any;
-    home: any;
-    created: string;
-}
-function sanitizeForFolderName(input) {
-    // Replace disallowed characters with an underscore
-    return input
-        .split('/')
-        .pop()
-        .replace(/\.[^/.]+$/, '')
-        .replace(/[<>:"/\\|?*]/g, '_') // Replace invalid characters
-        .replace(/\s+/g, '')           // Replace whitespace with underscores (optional)
-        .replace(/_+/g, '')            // Replace multiple underscores with a single underscore
-        .replace('.', '')            // Replace multiple underscores with a single underscore
-        .trim();                        // Trim any leading or trailing whitespace
-}
+import * as cheerio from 'cheerio';
+import { createWriteStream, existsSync, mkdirSync, rmSync } from 'node:fs';
+import { sep } from 'node:path';
 
 
 export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
-    async function getAllLinks(loops) {
+    async function getAllLinks() {
         sender.send('loading', true);
         sender.send('status', 'Starting to process properties...');
         const { data } = await axios.get('https://www.villagetaways.com/sitemap');
@@ -66,7 +42,7 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
         });
     }
     // Function to perform actions for each property link
-    async function processProperties(properties, propertiesDirPath, loops) {
+    async function processProperties(properties, loops) {
         sender.send('loading', true);
         var loop = 0;
         for (const prop of properties) {
@@ -224,7 +200,7 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
         const propertiesDirPath = saveDir + sep;
         sender.send('status', `Savin photos to ${propertiesDirPath}`);
         if (properties.length > 0) {
-            processProperties(properties, propertiesDirPath, loops);
+            processProperties(properties, loops);
         } else {
             sender.send('status', 'no properties found');
             sender.send('loading', false);

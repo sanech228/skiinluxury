@@ -1,12 +1,11 @@
-import { app, BrowserWindow, ipcMain, shell, dialog, protocol, net } from 'electron';
-import { createRequire } from 'node:module';
+import db from '@alinsme/electron-db';
+import { app, BrowserWindow, dialog, ipcMain, net, protocol, shell } from 'electron';
+import Store from 'electron-store';
+import { rmSync } from "node:fs";
 import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { useScraper } from '../preload/scraper';
-import db from '@alinsme/electron-db';
-import {rmSync} from "node:fs";
-import Store from 'electron-store';
+import { useScraper } from '../preload/skiinluxury';
 //@ts-ignore
 // import appIcon from '../../dist/icons/win/icon.ico?asset'
 // Electron Builder
@@ -57,14 +56,14 @@ const Anystack = new AnyStack(
         }
       },
       "prompt":{
-        "title":"HomeEx",
+        "title":"Ski In Luxury",
         "subtitle":"Activate your license to get started",
         "logo":"https://anystack.sh/img/emblem.svg",
         "email":"Email address",
         "licenseKey":"License key",
         "activateLicense":"Activate license",
-        "trial":"Try HomeEx for 7 days",
-        "trialExpired":"Thank you for trying HomeEx. Your trial has expired; to continue, please purchase a license.",
+        "trial":"Try Ski In Luxury for 7 days",
+        "trialExpired":"Thank you for trying Ski In Luxury. Your trial has expired; to continue, please purchase a license.",
         "errors":{
           "NOT_FOUND":"Your license information did not match our records.",
           "SUSPENDED":"Your license has been suspended.",
@@ -88,8 +87,10 @@ const Anystack = new AnyStack(
 
 process.env.APP_ROOT = path.join(__dirname, '../..')
 
-var totalLoops = 10;
+var totalLoops = 12;
+//@ts-ignore
 var savedir = store.get('filepath') || null;
+
 
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
@@ -160,9 +161,14 @@ async function createWindow() {
 
     //Anystack.ifAuthorized(win);
   }
-
+  
   win.on('ready-to-show', function() {
-    Anystack.ifAuthorized(win);
+
+    if (VITE_DEV_SERVER_URL) {
+      win.show();
+    } else {
+      Anystack.ifAuthorized(win);
+    }
   });
 
   //app.show();
@@ -211,6 +217,7 @@ app.on('activate', () => {
 ipcMain.on('delete-home', (event, args) => {
   const location = app.getPath("userData");
   const { path, title, id } = args;
+
   event.sender.send('loading', true);
   db.deleteRow('properties', location, {'id': id }, (succ, msg) => {
     if(path !== null) {
@@ -226,6 +233,7 @@ ipcMain.on('delete-home', (event, args) => {
   });
 });
 
+
 ipcMain.on('open-dir', (event, args) => {
   const { dir, url } = args;
   if(dir !== null) {
@@ -239,7 +247,7 @@ ipcMain.on('set-loop', (event, args) => {
   useScraper(event.sender, db, location, savedir);
 
   totalLoops = parseInt(args);
-  event.sender.send('loop-status',`Loops: ${totalLoops}`);
+  event.sender.send('loop-status',`Loops to extract: ${totalLoops}`);
 });
 
 ipcMain.on('set-dir', (event, args) => {
@@ -253,6 +261,7 @@ ipcMain.on('set-dir', (event, args) => {
   }).then(({ filePaths }) => {
     if(filePaths && filePaths.length === 1) {
       savedir = filePaths[0];
+      //@ts-ignore
       store.set('filepath', savedir);
       event.sender.send('status', `Saving photos to ${savedir}`);
       event.sender.send('dir-set', savedir);
@@ -278,7 +287,7 @@ ipcMain.on('check-db', (event, args) => {
   db.getAll('properties', location, (succ, data) => {
     if(succ) {
       event.sender.send('properties-set', data);
-      event.sender.send('status','Checking checked!');
+      event.sender.send('status','DB checked, all good!');
     }
   });
 });
@@ -288,27 +297,42 @@ ipcMain.on('command', (event, args) => {
 
   if(args === 'getAllLinks') {
     event.sender.send('status','Extracting...');
-    db.clearTable('properties', location, (succ, msg) => {
-      db.getAll('properties', location, (succ, data) => {
-        event.sender.send('properties-set', data);
-        getAllLinks(totalLoops);
-      });
-    })
+    getAllLinks(totalLoops);
+
+    // db.clearTable('properties', location, (succ, msg) => {
+    //   db.getAll('properties', location, (succ, data) => {
+    //     event.sender.send('properties-set', data);
+    //     getAllLinks(totalLoops);
+    //   });
+    // })
   } else if(args === 'init') {
     event.sender.send('status','Initializing...');
     db.getRows('properties', location, {
       'status': null
-    }, (succ, data) => {
+    }, (_, data) => {
       event.sender.send('properties-set', data);
       init(data, totalLoops);
     });
   } else if(args === 'loops') {
-    event.sender.send('status','Total loops: ' + totalLoops);
+    event.sender.send('status','Total loops to extract: ' + totalLoops);
   } else if(args === 'empty-db') {
     event.sender.send('loading', true);
     event.sender.send('status','Deleting database...');
+    // rmSync(path, { recursive: true, force: true });
+
+    db.getAll('properties', location, (succ, data) => {
+      if (succ) {
+        for (const { images } of data) {
+          const path = images[0].path;
+          rmSync(path, { recursive: true, force: true });
+        }
+      }
+    });
+
     db.clearTable('properties', location, (succ, msg) => {
       if (succ) {
+        //@ts-ignore
+        store.set('extracted', []);
         db.getAll('properties', location, (succ, data) => {
           if (succ) {
             event.sender.send('properties-set', data);
