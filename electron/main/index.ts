@@ -286,7 +286,7 @@ ipcMain.on('check-db', (event, args) => {
   });
   db.getAll('properties', location, (succ, data) => {
     if(succ) {
-      event.sender.send('properties-set', data);
+      event.sender.send('properties-set', data); 
       event.sender.send('status','DB checked, all good!');
     }
   });

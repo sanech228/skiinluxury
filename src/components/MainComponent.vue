@@ -120,11 +120,11 @@ watch(loop, (newloop: number) => {
       </a-tooltip>
     </div>
     <div class="flex-2">
-      <a-button type="primary" :loading="loading" @click="sendCommand('getAllLinks')" :disabled="properties.length > 10 || savedir === null">Ski In Luxury ({{ properties.length }})</a-button>
+      <a-button type="primary" :loading="loading" @click="sendCommand('getAllLinks')" :disabled="savedir === null">Ski In Luxury ({{ properties.length }})</a-button>
     </div>
     <div class="flex-2">
       <a-input-group compact>
-        <a-button type="primary" ghost :loading="loading" @click="decrement" :disabled="loop <= 12">
+        <a-button type="primary" ghost :loading="loading" @click="decrement" :disabled="loop <= 2">
           <template #icon>
             <MinusOutlined />
           </template>
