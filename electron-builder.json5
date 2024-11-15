@@ -3,7 +3,7 @@
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
   "appId": "com.myapp.skiinluxury",
   "asar": true,
-  "productName": "Ski In Luxury",
+  "productName": "SkiInLuxury",
   "extraResources": [
     {
       from: "./node_modules/@anystack/electron-license/license",
