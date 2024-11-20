@@ -4,7 +4,7 @@ import { useTitle } from '@vueuse/core';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useHelpers } from '../helpers';
 
-const { emptyHome, columns } = useHelpers();
+const { emptyHome, columns, countries } = useHelpers();
 const properties = ref([]);
 const status = ref('');
 const savedir = ref(null);
@@ -12,10 +12,12 @@ const loopstatus = ref('');
 const errors = ref('');
 const loading = ref(false);
 const drawer = ref(false);
-const loop = ref(2);
+const loop = ref(99);
 const home = reactive({...emptyHome});
-
+const country = ref('');
 const title = computed(() => !status.value ? 'Ski In Luxury' : "Ski In Luxury - " + status.value);
+const warning = computed(() => !/\d/.test(country.value));
+const selected = computed(() => countries.find(c => c.value === country.value));
 useTitle(title);
 
 
@@ -36,7 +38,6 @@ const openDir = (record: any, operation: string) => {
   if(operation === 'link') {
     dir = null;
     url = record.url;
-    console.log('link', record.url);
   } else if(operation === 'dir') {
     dir = record.images[0].path;
     url = null;
@@ -95,11 +96,26 @@ onMounted(() => {
     errors.value = args
   })
 
+  window.ipcRenderer.on('receive-start-url', (event, args) => {
+    country.value = args
+    sendCommand('count');
+  })
+  window.ipcRenderer.on('set-found', (event, args) => {
+    if(args < loop.value) {
+      loop.value = args;
+    }
+  })
+
 });
 
+function onSelectChange(value: string) {
+  loop.value = 99;
+  window.ipcRenderer.send('set-start-url', value);
+}
 
 // ########### Watchers ###########
 watch(loop, (newloop: number) => {
+  console.log('set loop', newloop);
   window.ipcRenderer.send('set-loop', newloop);
   setTimeout(() => {
     sendCommand('loops');
@@ -120,8 +136,26 @@ watch(loop, (newloop: number) => {
       </a-tooltip>
     </div>
     <div class="flex-2">
-      <a-button type="primary" :loading="loading" @click="sendCommand('getAllLinks')" :disabled="savedir === null">Ski In Luxury ({{ properties.length }})</a-button>
+      <a-tree-select
+        v-model:value="country"
+        style="width: 300px"
+        :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+        placeholder="Select location"
+        tree-default-expand-all
+        :tree-data="countries"
+        tree-node-filter-prop="label"
+        :status="warning ? 'error' : null"
+        @change="onSelectChange"
+      >
+      </a-tree-select>
     </div>
+    <div class="flex-2">
+      <a-button type="primary" :loading="loading" @click="sendCommand('getAllLinks')" :disabled="savedir === null || warning">
+        <span v-if="warning">Invalid location</span>
+        <span v-else>Extract Resort #{{ country }}</span>
+      </a-button>
+    </div>
+    
     <div class="flex-2">
       <a-input-group compact>
         <a-button type="primary" ghost :loading="loading" @click="decrement" :disabled="loop <= 2">

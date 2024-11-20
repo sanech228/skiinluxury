@@ -10,20 +10,33 @@ Store.initRenderer();
 
 export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
     const store = new Store();
-    async function getAllLinks($loops = 12) {
-        // db.getAll('properties', dbPath, (succ: boolean, data: any) => {
-        //     console.log(dbPath);
-        //     console.log(data);
-        // });
-
-        //return;
+    async function countHomes($loops = 12) {
         //@ts-ignore
         const ids = store.get('extracted') || [];
-        let loadmore = '';
+        //@ts-ignore
+        const urltoextract = store.get('urltoextract') || '';
+        const dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}`;
+
+        sender.send('loading', true);
+        const { data } = await axios.get(dataurl);
+        const $ = cheerio.load(data);
+        const CheerioItems = $('div.col-sm-6.col-xxl-4.col-xxxl-3');
+        const items: any = CheerioItems.toArray();
+        sender.send('set-found', items.length); 
+        sender.send('loading', false);
+    }   
+    async function getAllLinks($loops = 12) {
+        //@ts-ignore
+        const ids = store.get('extracted') || [];
+
+        //@ts-ignore
+        const urltoextract = store.get('urltoextract') || null;
+        var dataurl
         if(ids.length > 0) {
-            loadmore = `?loadmore_seen=${ids.join(',')}`;
+            dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}&loadmore_seen=${ids.join(',')}`;
+        } else {
+            dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}`;
         }
-        const dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}${loadmore}`;
         //console.log('dataurl', dataurl);
         //@ts-ignore
         //const homes = store.get('homes') || [];
@@ -34,7 +47,7 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
         const $ = cheerio.load(data);
         const CheerioItems = $('div.col-sm-6.col-xxl-4.col-xxxl-3');
         const items: any = CheerioItems.toArray();
-
+        
         let loopnum = 0;
         const extractedhomes = [];
         const extractedids = [];
@@ -194,6 +207,7 @@ Summary:
     return {
         init,
         getAllLinks,
+        countHomes,
     }
 };
 

@@ -79,7 +79,7 @@ const Anystack = new AnyStack(
         "subtitle":"Thank you for activating your product license."
       }
     },
-    autoUpdater
+    autoUpdater 
 );
 
 
@@ -87,10 +87,9 @@ const Anystack = new AnyStack(
 
 process.env.APP_ROOT = path.join(__dirname, '../..')
 
-var totalLoops = 12;
+var totalLoops = 99;
 //@ts-ignore
 var savedir = store.get('filepath') || null;
-
 
 export const MAIN_DIST = path.join(process.env.APP_ROOT, 'dist-electron')
 export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
@@ -234,6 +233,13 @@ ipcMain.on('delete-home', (event, args) => {
 });
 
 
+ipcMain.on('set-start-url', (event, args) => {
+  //@ts-ignore
+  store.set('urltoextract', args)
+  //@ts-ignore
+  let url = store.get('urltoextract');
+  event.sender.send('receive-start-url', url);
+});
 ipcMain.on('open-dir', (event, args) => {
   const { dir, url } = args;
   if(dir !== null) {
@@ -242,6 +248,7 @@ ipcMain.on('open-dir', (event, args) => {
     shell.openExternal(url);
   }
 });
+
 ipcMain.on('set-loop', (event, args) => {
   const location = app.getPath("userData");
   useScraper(event.sender, db, location, savedir);
@@ -272,6 +279,12 @@ ipcMain.on('set-dir', (event, args) => {
 
 
 ipcMain.on('check-db', (event, args) => {
+  //@ts-ignore
+  let url = store.get('urltoextract');
+  if(url !== null || url !== '' && url !== undefined) {
+    event.sender.send('receive-start-url', url);
+  }
+
   const version = app.getVersion();
   event.sender.send('set-version', `v${version}`);
 
@@ -293,7 +306,7 @@ ipcMain.on('check-db', (event, args) => {
 });
 ipcMain.on('command', (event, args) => {
   const location = app.getPath("userData");
-  const { init, getAllLinks } = useScraper(event.sender, db, location, savedir);
+  const { init, getAllLinks, countHomes } = useScraper(event.sender, db, location, savedir);
 
   if(args === 'getAllLinks') {
     event.sender.send('status','Extracting...');
@@ -305,6 +318,9 @@ ipcMain.on('command', (event, args) => {
     //     getAllLinks(totalLoops);
     //   });
     // })
+  } else if(args === 'count') {
+    event.sender.send('status','Counting properties...');
+    countHomes(totalLoops);
   } else if(args === 'init') {
     event.sender.send('status','Initializing...');
     db.getRows('properties', location, {
