@@ -257,6 +257,7 @@ export function useHelpers() {
         title: '',
         rates: [] as any[],
         location: '',
+        latlng: '',
         description: '',
         description_html: '',
         amenities: [] as any[],

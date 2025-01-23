@@ -10,6 +10,10 @@ Store.initRenderer();
 
 export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
     const store = new Store();
+    function string_between_strings(startStr, endStr, str) {
+        const pos: any = str.indexOf(startStr) + startStr.length;
+        return str.substring(pos, str.indexOf(endStr, pos));
+    }
     async function countHomes($loops = 12) {
         //@ts-ignore
         const ids = store.get('extracted') || [];
@@ -68,13 +72,21 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
 let textfile = `
 {title} in {location}
 
+
 {description}
+
+Coordinates:
+https://www.google.co.uk/maps/place/{latlng}
+{latlng}
+
 
 Amenities:
 {amenities}
 
+
 Summary:
 {summary}
+
 `;
                 const h = cheerio.load($(value).html());
                 const url = h('a.chaletClick.active').attr('href');
@@ -87,6 +99,12 @@ Summary:
                 //property-section
                 const description_html = itm('section.chalet-section#property-section').html();
                 const description = itm('section.chalet-section#property-section').text();
+                const scripts = itm('script').filter(function() {
+                    return ($(this).html().indexOf('const beachMarker') > -1);
+                });
+
+                const foundText = scripts.text();
+                const latlng = string_between_strings('https://www.google.co.uk/maps/place/', '"', foundText);
 
                 const amenities = itm('div.chalet-features li').map(function() {
                     return $(this).text();
@@ -97,6 +115,8 @@ Summary:
                 
                 textfile = textfile.replace('{title}', name);
                 textfile = textfile.replace('{location}', location);
+                textfile = textfile.replace('{latlng}', latlng);
+                textfile = textfile.replace('{latlng}', latlng);
                 textfile = textfile.replace('{description}', description);
                 textfile = textfile.replace('{amenities}', amenities.join('\n'));
                 textfile = textfile.replace('{summary}', summary.join('\n'));
@@ -106,6 +126,7 @@ Summary:
                     name,
                     url,
                     location,
+                    latlng,
                     status: null,
                     path: id,
                     title: name,
@@ -117,7 +138,6 @@ Summary:
                     images: [],
                     created: new Date().toLocaleString(),
                 };
-
 
                 const imgssss = itm('a.swiper-slide.chalet-hero__image-link').map(function() {
                     const imgurl    =  itm(this).attr('href');

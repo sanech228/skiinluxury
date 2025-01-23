@@ -232,7 +232,11 @@ watch(loop, (newloop: number) => {
           <a-tag :bordered="false" class="">{{ summary }}</a-tag>
         </div>
       </div>
-
+      <div class="mb-4">
+        <a :href="`${home.latlng}`">{{ home.latlng }}</a>
+        <br>
+        {{ home.latlng }}
+      </div>
       <h2 class="font-bold text-xl mb-5">Description</h2>
       <div v-html="home.description_html" class="mb-5"></div>
       <h2 class="font-bold text-xl mb-2">Amenities</h2>
