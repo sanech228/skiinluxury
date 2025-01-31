@@ -99,435 +99,268 @@ const select = [
 
 const data = `
 <div class="accordion-item">
-    <h2 class="accordion-header m-0" id="flush-fixed-headingTwo">
-       <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#flush-fixed-collapseTwo" aria-expanded="false" aria-controls="flush-fixed-collapseTwo">France</button>
+    <h2 class="accordion-header" id="HomepageHeroSearch-flush-headingOne">
+        <button class="accordion-button collapsed brand-font" type="button" data-bs-toggle="collapse" data-bs-target="#HomepageHeroSearch-flush-collapseOne" aria-expanded="false" aria-controls="HomepageHeroSearch-flush-collapseOne">
+            France
+        </button>
     </h2>
-    <div id="flush-fixed-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-fixed-headingTwo" data-parent="#accordionDestinationFixed">
-       <div class="accordion-body">
-          <ul class="list-unstyled p-o m-0">
-             <li class="form-check form-switch mb-2">
-                <input class="form-check-input multiple-toggle" type="checkbox" value="0" role="switch" id="france-fixed-all" data-target=".all-france" data-action="select">
-                <label class="form-check-label" for="france-fixed-all"><strong>All France</strong></label>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="1" name="resortName[]" id="france-fixed-1" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-1">Alpe d'Huez</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="18" name="resortName[]" id="france-fixed-18" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-18">Argentiere</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="96" name="resortName[]" id="france-fixed-96" class="form-check-input all-france destination-checkbox  region-portes-du-soleil  ">
-                <label class="form-check-label" for="france-fixed-96">Avoriaz</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="14" name="resortName[]" id="france-fixed-14" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-14">Chamonix</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="31" name="resortName[]" id="france-fixed-31" class="form-check-input all-france destination-checkbox  region-portes-du-soleil  ">
-                <label class="form-check-label" for="france-fixed-31">Chatel</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="10" name="resortName[]" id="france-fixed-10" class="form-check-input all-france destination-checkbox region-three-valleys   region-courchevel">
-                <label class="form-check-label" for="france-fixed-10">Courchevel 1850</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="35" name="resortName[]" id="france-fixed-35" class="form-check-input all-france destination-checkbox region-three-valleys   region-courchevel">
-                <label class="form-check-label" for="france-fixed-35">Courchevel Le Praz</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="57" name="resortName[]" id="france-fixed-57" class="form-check-input all-france destination-checkbox region-three-valleys   region-courchevel">
-                <label class="form-check-label" for="france-fixed-57">Courchevel Moriond</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="83" name="resortName[]" id="france-fixed-83" class="form-check-input all-france destination-checkbox region-three-valleys   region-courchevel">
-                <label class="form-check-label" for="france-fixed-83">Courchevel Village</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="52" name="resortName[]" id="france-fixed-52" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-52">La Clusaz</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="32" name="resortName[]" id="france-fixed-32" class="form-check-input all-france destination-checkbox region-three-valleys   ">
-                <label class="form-check-label" for="france-fixed-32">La Tania</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="27" name="resortName[]" id="france-fixed-27" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-27">Les Arcs</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="20" name="resortName[]" id="france-fixed-20" class="form-check-input all-france destination-checkbox  region-portes-du-soleil  ">
-                <label class="form-check-label" for="france-fixed-20">Les Gets</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="50" name="resortName[]" id="france-fixed-50" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-50">Megeve</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="4" name="resortName[]" id="france-fixed-4" class="form-check-input all-france destination-checkbox region-three-valleys   ">
-                <label class="form-check-label" for="france-fixed-4">Meribel</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="19" name="resortName[]" id="france-fixed-19" class="form-check-input all-france destination-checkbox  region-portes-du-soleil  ">
-                <label class="form-check-label" for="france-fixed-19">Morzine</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="26" name="resortName[]" id="france-fixed-26" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-26">Sainte Foy</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="53" name="resortName[]" id="france-fixed-53" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-53">Samoens</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="54" name="resortName[]" id="france-fixed-54" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-54">Serre Chevalier</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="36" name="resortName[]" id="france-fixed-36" class="form-check-input all-france destination-checkbox    ">
-                <label class="form-check-label" for="france-fixed-36">St Gervais</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="33" name="resortName[]" id="france-fixed-33" class="form-check-input all-france destination-checkbox region-three-valleys   ">
-                <label class="form-check-label" for="france-fixed-33">St Martin de Belleville</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="22" name="resortName[]" id="france-fixed-22" class="form-check-input all-france destination-checkbox   region-killy ">
-                <label class="form-check-label" for="france-fixed-22">Tignes</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="2" name="resortName[]" id="france-fixed-2" class="form-check-input all-france destination-checkbox   region-killy ">
-                <label class="form-check-label" for="france-fixed-2">Val d'Isere</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="21" name="resortName[]" id="france-fixed-21" class="form-check-input all-france destination-checkbox region-three-valleys   ">
-                <label class="form-check-label" for="france-fixed-21">Val Thorens</label>
-                </span>
-             </li>
-          </ul>
-       </div>
+    <div id="HomepageHeroSearch-flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#HomepageHeroSearchAccordionDestinationHero">
+        <div class="accordion-body">
+            <ul class="list-unstyled p-o m-0">
+                <li class="form-check form-switch mb-2">
+                    <input type="checkbox" value="0" role="switch" id="HomepageHeroSearch-france-all" data-target=".all-france" data-parent="#HomepageHeroSearch" data-action="select" class="form-check-input multiple-toggle" />
+                    <label for="HomepageHeroSearch-france-all" class="form-check-label"><strong>All France</strong></label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="18" id="HomepageHeroSearch-france-18" class="form-check-input all-france destination-checkbox mont-blanc" />
+                    <label for="HomepageHeroSearch-france-18" class="form-check-label">Argentiere</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="14" id="HomepageHeroSearch-france-14" class="form-check-input all-france destination-checkbox mont-blanc" />
+                    <label for="HomepageHeroSearch-france-14" class="form-check-label">Chamonix</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="31" id="HomepageHeroSearch-france-31" class="form-check-input all-france destination-checkbox portes-du-soleil" />
+                    <label for="HomepageHeroSearch-france-31" class="form-check-label">Chatel</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="52" id="HomepageHeroSearch-france-52" class="form-check-input all-france destination-checkbox" />
+                    <label for="HomepageHeroSearch-france-52" class="form-check-label">La Clusaz</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="20" id="HomepageHeroSearch-france-20" class="form-check-input all-france destination-checkbox portes-du-soleil" />
+                    <label for="HomepageHeroSearch-france-20" class="form-check-label">Les Gets</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="50" id="HomepageHeroSearch-france-50" class="form-check-input all-france destination-checkbox mont-blanc" />
+                    <label for="HomepageHeroSearch-france-50" class="form-check-label">Megeve</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="4" id="HomepageHeroSearch-france-4" class="form-check-input all-france destination-checkbox three-valleys" />
+                    <label for="HomepageHeroSearch-france-4" class="form-check-label">Meribel</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="19" id="HomepageHeroSearch-france-19" class="form-check-input all-france destination-checkbox portes-du-soleil" />
+                    <label for="HomepageHeroSearch-france-19" class="form-check-label">Morzine</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="26" id="HomepageHeroSearch-france-26" class="form-check-input all-france destination-checkbox" />
+                    <label for="HomepageHeroSearch-france-26" class="form-check-label">Sainte Foy</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="53" id="HomepageHeroSearch-france-53" class="form-check-input all-france destination-checkbox" />
+                    <label for="HomepageHeroSearch-france-53" class="form-check-label">Samoens</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="54" id="HomepageHeroSearch-france-54" class="form-check-input all-france destination-checkbox" />
+                    <label for="HomepageHeroSearch-france-54" class="form-check-label">Serre Chevalier</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="36" id="HomepageHeroSearch-france-36" class="form-check-input all-france destination-checkbox mont-blanc" />
+                    <label for="HomepageHeroSearch-france-36" class="form-check-label">St Gervais</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="33" id="HomepageHeroSearch-france-33" class="form-check-input all-france destination-checkbox three-valleys" />
+                    <label for="HomepageHeroSearch-france-33" class="form-check-label">St Martin de Belleville</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="22" id="HomepageHeroSearch-france-22" class="form-check-input all-france destination-checkbox" />
+                    <label for="HomepageHeroSearch-france-22" class="form-check-label">Tignes</label>
+                </li>
+                <li class="form-check">
+                    <input type="checkbox" name="resortName[]" value="2" id="HomepageHeroSearch-france-2" class="form-check-input all-france destination-checkbox" />
+                    <label for="HomepageHeroSearch-france-2" class="form-check-label">Val d'Isere</label>
+                </li>
+            </ul>
+        </div>
     </div>
-    <!-- /#flush-fixed-collapseTwo -->
- </div>
- <!-- /.accordion-item -->	
- <div class="accordion-item">
-    <h2 class="accordion-header m-0" id="flush-fixed-headingThree">
-       <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#flush-fixed-collapseThree" aria-expanded="false" aria-controls="flush-fixed-collapseThree">Switzerland</button>
+</div>
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="HomepageHeroSearch-flush-headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#HomepageHeroSearch-flush-collapseTwo" aria-expanded="false" aria-controls="HomepageHeroSearch-flush-collapseTwo">
+            Switzerland
+        </button>
     </h2>
-    <div id="flush-fixed-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-fixed-headingThree" data-parent="#accordionDestinationFixed">
-       <div class="accordion-body">
-          <ul class="list-unstyled m-0 p-0">
-             <li class="form-check form-switch mb-2">
-                <input class="form-check-input multiple-toggle" type="checkbox" value="0" role="switch" id="switzerland-fixed-all" data-target=".all-switzerland" data-action="select">
-                <label class="form-check-label" for="switzerland-fixed-all"><strong>All Switzerland</strong></label>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="95" name="resortName[]" id="switzerland-fixed-95" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-95">Andermatt</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="61" name="resortName[]" id="switzerland-fixed-61" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-61">Crans Montana</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="28" name="resortName[]" id="switzerland-fixed-28" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-28">Davos</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="77" name="resortName[]" id="switzerland-fixed-77" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-77">Grindelwald</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="46" name="resortName[]" id="switzerland-fixed-46" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-46">Gstaad</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="3" name="resortName[]" id="switzerland-fixed-3" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-3">Klosters</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="59" name="resortName[]" id="switzerland-fixed-59" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-59">Nendaz</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="67" name="resortName[]" id="switzerland-fixed-67" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-67">Saas Fee</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="39" name="resortName[]" id="switzerland-fixed-39" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-39">St Moritz</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="13" name="resortName[]" id="switzerland-fixed-13" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-13">Verbier</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="16" name="resortName[]" id="switzerland-fixed-16" class="form-check-input all-switzerland destination-checkbox">
-                <label class="form-check-label" for="switzerland-fixed-16">Zermatt</label>
-                </span>
-             </li>
-          </ul>
-       </div>
+    <div id="HomepageHeroSearch-flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="HomepageHeroSearch-flush-headingTwo" data-bs-parent="#HomepageHeroSearchAccordionDestinationHero">
+        <div class="accordion-body">
+            <ul class="list-unstyled p-o m-0">
+                <li class="form-check form-switch mb-2">
+                    <input type="checkbox" value="0" role="switch" id="HomepageHeroSearch-switzerland-all" data-target=".all-switzerland" data-parent="#HomepageHeroSearch" data-action="select" class="form-check-input multiple-toggle" />
+                    <label for="HomepageHeroSearch-switzerland-all" class="form-check-label"><strong>All Switzerland</strong></label>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="61" id="HomepageHeroSearch-switzerland-61" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-61" class="form-check-label">Crans Montana</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="77" id="HomepageHeroSearch-switzerland-77" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-77" class="form-check-label">Grindelwald</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="46" id="HomepageHeroSearch-switzerland-46" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-46" class="form-check-label">Gstaad</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="3" id="HomepageHeroSearch-switzerland-3" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-3" class="form-check-label">Klosters</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="67" id="HomepageHeroSearch-switzerland-67" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-67" class="form-check-label">Saas Fee</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="39" id="HomepageHeroSearch-switzerland-39" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-39" class="form-check-label">St Moritz</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="13" id="HomepageHeroSearch-switzerland-13" class="form-check-input all-switzerland four-valleys destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-13" class="form-check-label">Verbier</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="16" id="HomepageHeroSearch-switzerland-16" class="form-check-input all-switzerland destination-checkbox" />
+                        <label for="HomepageHeroSearch-switzerland-16" class="form-check-label">Zermatt</label>
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <!-- /#flush-fixed-collapseThree -->
- </div>
- <!-- /.accordion-item -->	
- <div class="accordion-item">
-    <h2 class="accordion-header m-0" id="flush-fixed-headingFour">
-       <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#flush-fixed-collapseFour" aria-expanded="false" aria-controls="flush-fixed-collapseFour">Austria</button>
+</div>
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="HomepageHeroSearch-flush-headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#HomepageHeroSearch-flush-collapseThree" aria-expanded="false" aria-controls="HomepageHeroSearch-flush-collapseThree">
+            Austria
+        </button>
     </h2>
-    <div id="flush-fixed-collapseFour" class="accordion-collapse collapse" aria-labelledby="flush-fixed-headingFour" data-parent="#accordionDestinationFixed">
-       <div class="accordion-body">
-          <ul class="list-unstyled m-0 p-0">
-             <li class="form-check form-switch mb-2">
-                <input class="form-check-input multiple-toggle" type="checkbox" value="0" role="switch" id="austria-fixed-all" data-target=".all-austria" data-action="select">
-                <label class="form-check-label" for="austria-fixed-all"><strong>All Austria</strong></label>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="94" name="resortName[]" id="austria-fixed-94" class="form-check-input all-austria destination-checkbox ">
-                <label class="form-check-label" for="austria-fixed-94">Kitzbuhel</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="88" name="resortName[]" id="austria-fixed-88" class="form-check-input all-austria destination-checkbox region-arlberg">
-                <label class="form-check-label" for="austria-fixed-88">Lech</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="233" name="resortName[]" id="austria-fixed-233" class="form-check-input all-austria destination-checkbox ">
-                <label class="form-check-label" for="austria-fixed-233">Leogang</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="24" name="resortName[]" id="austria-fixed-24" class="form-check-input all-austria destination-checkbox region-arlberg">
-                <label class="form-check-label" for="austria-fixed-24">St Anton</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="38" name="resortName[]" id="austria-fixed-38" class="form-check-input all-austria destination-checkbox region-arlberg">
-                <label class="form-check-label" for="austria-fixed-38">St Christoph</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="68" name="resortName[]" id="austria-fixed-68" class="form-check-input all-austria destination-checkbox region-arlberg">
-                <label class="form-check-label" for="austria-fixed-68">Zurs</label>
-                </span>
-             </li>
-          </ul>
-       </div>
+    <div id="HomepageHeroSearch-flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="HomepageHeroSearch-flush-headingThree" data-bs-parent="#HomepageHeroSearchAccordionDestinationHero">
+        <div class="accordion-body">
+            <ul class="list-unstyled p-o m-0">
+                <li class="form-check form-switch mb-2">
+                    <input type="checkbox" value="0" role="switch" id="HomepageHeroSearch-austria-all" data-target=".all-austria" data-parent="#HomepageHeroSearch" data-action="select" class="form-check-input multiple-toggle" />
+                    <label for="HomepageHeroSearch-austria-all" class="form-check-label"><strong>All Austria</strong></label>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="94" id="HomepageHeroSearch-austria-94" class="form-check-input all-austria destination-checkbox" />
+                        <label for="HomepageHeroSearch-austria-94" class="form-check-label">Kitzbuhel</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="88" id="HomepageHeroSearch-austria-88" class="form-check-input all-austria destination-checkbox" />
+                        <label for="HomepageHeroSearch-austria-88" class="form-check-label">Lech</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="233" id="HomepageHeroSearch-austria-233" class="form-check-input all-austria destination-checkbox" />
+                        <label for="HomepageHeroSearch-austria-233" class="form-check-label">Leogang</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="24" id="HomepageHeroSearch-austria-24" class="form-check-input all-austria destination-checkbox" />
+                        <label for="HomepageHeroSearch-austria-24" class="form-check-label">St Anton</label>
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <!-- /#flush-fixed-collapseFour -->
- </div>
- <!-- /.accordion-item -->	
- <div class="accordion-item">
-    <h2 class="accordion-header m-0" id="flush-fixed-headingFive">
-       <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#flush-fixed-collapseFive" aria-expanded="false" aria-controls="flush-fixed-collapseFive">Italy</button>
+</div>
+
+<div class="accordion-item">
+    <h2 class="accordion-header" id="HomepageHeroSearch-flush-headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#HomepageHeroSearch-flush-collapseFour" aria-expanded="false" aria-controls="HomepageHeroSearch-flush-collapseFour">
+            Italy
+        </button>
     </h2>
-    <div id="flush-fixed-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-fixed-headingFive" data-parent="#accordionDestinationFixed">
-       <div class="accordion-body">
-          <ul class="list-unstyled m-0 p-0">
-             <li class="form-check form-switch mb-2">
-                <input class="form-check-input multiple-toggle" type="checkbox" value="0" role="switch" id="italy-fixed-all" data-target=".all-italy" data-action="select">
-                <label class="form-check-label" for="italy-fixed-all"><strong>All Italy</strong></label>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="214" name="resortName[]" id="italy-fixed-214" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-214">Alta Badia</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="227" name="resortName[]" id="italy-fixed-227" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-227">Arabba</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="82" name="resortName[]" id="italy-fixed-82" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-82">Brunico</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="401" name="resortName[]" id="italy-fixed-401" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-401">Canazei</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="226" name="resortName[]" id="italy-fixed-226" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-226">Cervinia</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="93" name="resortName[]" id="italy-fixed-93" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-93">Cortina</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="403" name="resortName[]" id="italy-fixed-403" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-403">Livigno</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="370" name="resortName[]" id="italy-fixed-370" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-370">Madonna di Campiglio</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="382" name="resortName[]" id="italy-fixed-382" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-382">Ortisei</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="97" name="resortName[]" id="italy-fixed-97" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-97">Selva Val Gardena</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="386" name="resortName[]" id="italy-fixed-386" class="form-check-input all-italy destination-checkbox">
-                <label class="form-check-label" for="italy-fixed-386">Sestriere</label>
-                </span>
-             </li>
-          </ul>
-       </div>
+    <div id="HomepageHeroSearch-flush-collapseFour" class="accordion-collapse collapse" aria-labelledby="HomepageHeroSearch-flush-headingFour" data-bs-parent="#HomepageHeroSearchAccordionDestinationHero">
+        <div class="accordion-body">
+            <ul class="list-unstyled p-o m-0">
+                <li class="form-check form-switch mb-2">
+                    <input type="checkbox" value="0" role="switch" id="HomepageHeroSearch-italy-all" data-target=".all-italy" data-action="select" data-parent="#HomepageHeroSearch" class="form-check-input multiple-toggle" />
+                    <label for="HomepageHeroSearch-italy-all" class="form-check-label"><strong>All Italy</strong></label>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="214" id="HomepageHeroSearch-italy-214" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-214" class="form-check-label">Alta Badia</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="227" id="HomepageHeroSearch-italy-227" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-227" class="form-check-label">Arabba</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="82" id="HomepageHeroSearch-italy-82" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-82" class="form-check-label">Brunico</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="226" id="HomepageHeroSearch-italy-226" class="form-check-input all-italy destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-226" class="form-check-label">Cervinia</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="93" id="HomepageHeroSearch-italy-93" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-93" class="form-check-label">Cortina</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="403" id="HomepageHeroSearch-italy-403" class="form-check-input all-italy destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-403" class="form-check-label">Livigno</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="370" id="HomepageHeroSearch-italy-370" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-370" class="form-check-label">Madonna di Campiglio</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="382" id="HomepageHeroSearch-italy-382" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-382" class="form-check-label">Ortisei</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="97" id="HomepageHeroSearch-italy-97" class="form-check-input all-italy dolomites destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-97" class="form-check-label">Selva Val Gardena</label>
+                    </span>
+                </li>
+                <li>
+                    <span class="form-check">
+                        <input type="checkbox" name="resortName[]" value="386" id="HomepageHeroSearch-italy-386" class="form-check-input all-italy destination-checkbox" />
+                        <label for="HomepageHeroSearch-italy-386" class="form-check-label">Sestriere</label>
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
-    <!-- /#flush-fixed-collapseFive -->
- </div>
- <!-- /.accordion-item -->	
- <div class="accordion-item">
-    <h2 class="accordion-header m-0" id="flush-fixed-headingSix">
-       <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#flush-fixed-collapseSix" aria-expanded="false" aria-controls="flush-fixed-collapseSix">Canada</button>
-    </h2>
-    <div id="flush-fixed-collapseSix" class="accordion-collapse collapse" aria-labelledby="flush-fixed-headingSix" data-parent="#accordionDestinationFixed">
-       <div class="accordion-body">
-          <ul class="list-unstyled m-0 p-0">
-             <li class="form-check form-switch mb-2">
-                <input class="form-check-input multiple-toggle" type="checkbox" value="0" role="switch" id="canada-fixed-all" data-target=".all-canada" data-action="select">
-                <label class="form-check-label" for="canada-fixed-all"><strong>All Canada</strong></label>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="86" name="resortName[]" id="canada-fixed-86" class="form-check-input all-canada destination-checkbox">
-                <label class="form-check-label" for="canada-fixed-86">Revelstoke</label>
-                </span>
-             </li>
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="220" name="resortName[]" id="canada-fixed-220" class="form-check-input all-canada destination-checkbox">
-                <label class="form-check-label" for="canada-fixed-220">Whistler</label>
-                </span>
-             </li>
-          </ul>
-       </div>
-    </div>
-    <!-- /#flush-fixed-collapseSix -->
- </div>
- <!-- /.accordion-item -->	
- <div class="accordion-item">
-    <h2 class="accordion-header m-0" id="flush-fixed-headingSeven">
-       <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#flush-fixed-collapseSeven" aria-expanded="false" aria-controls="flush-fixed-collapseSeven">Andorra</button>
-    </h2>
-    <div id="flush-fixed-collapseSeven" class="accordion-collapse collapse" aria-labelledby="flush-fixed-headingSeven" data-parent="#accordionDestinationFixed">
-       <div class="accordion-body">
-          <ul class="list-unstyled m-0 p-0">
-             <li>
-                <span class="form-check">
-                <input type="checkbox" value="384" name="resortName[]" id="andorra-fixed-384" class="form-check-input all-andorra destination-checkbox">
-                <label class="form-check-label" for="andorra-fixed-384">Soldeu</label>
-                </span>
-             </li>
-          </ul>
-       </div>
-    </div>
-    <!-- /#flush-fixed-collapseSeven -->
- </div>
- <!-- /.accordion-item -->	
- </div><!-- /#accordionDestinationFixed -->
-`;
+</div>`;
 
 
 const chalets = [];
@@ -538,14 +371,15 @@ const $ = cheerio.load(data);
 const items = $('div.accordion-item').toArray();
 for (let [ind, item] of items.entries()) {
   const lis = $(item).find('ul li').toArray();
-
+   
   for (let [index, li] of lis.entries()) {
-    if( $(li).hasClass('form-check') ) {
+    if( $(li).hasClass('form-switch') ) {
       chalets[ind] = {
         label: $(li).find('label').text(),
         value: $(li).find('label').text(),
         children: []
       }
+      console.log(lis.length, chalets[ind]);
       continue;
     } else if(chalets[ind] === undefined) {
       continue;
@@ -566,25 +400,3 @@ fs.writeFile('./chalets.txt', JSON.stringify(chalets, null, 2), (err) => {
     console.error(' file written successfully');
   }
 });
-
-// let count = 0;
-// for (let [itemindex, item] of select.entries()) {
-//   count++;
-//     for (let [index, child] of item.children.entries()) {
-        
-//         select[itemindex].children[index].label = useChangeCase(child.label, 'capitalCase').value
-//         console.log(select[itemindex].children[index].label)
-//     }
-// }
-
-// console.log(count)
-
-// const content = select;
-// fs.writeFile('./text.txt', JSON.stringify(content), (err) => {
-//   if (err) {
-//     console.error(err);
-//   } else {
-   
-//     console.error(' file written successfully');
-//   }
-// });

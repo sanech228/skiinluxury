@@ -4,7 +4,7 @@ import { useTitle } from '@vueuse/core';
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useHelpers } from '../helpers';
 
-const { emptyHome, columns, countries } = useHelpers();
+const { emptyHome, columns, sites, data } = useHelpers();
 const properties = ref([]);
 const status = ref('');
 const savedir = ref(null);
@@ -14,10 +14,14 @@ const loading = ref(false);
 const drawer = ref(false);
 const loop = ref(99);
 const home = reactive({...emptyHome});
-const country = ref('');
+const country = ref<number | string>(0);
+const countries = ref<any>([]);
+const site = ref('google');
 const title = computed(() => !status.value ? 'Ski In Luxury' : "Ski In Luxury - " + status.value);
-const warning = computed(() => !/\d/.test(country.value));
-const selected = computed(() => countries.find(c => c.value === country.value));
+const warning = computed(() => country.value == '' || country.value == '0' || country.value == 0);
+
+//const selected = computed(() => countries.value.find((c: any) => c.value === country.value));
+//const selected = computed(() => countries.find(c => c.value === country.value));
 useTitle(title);
 
 
@@ -53,7 +57,6 @@ const viewHomeClose = () => {
   drawer.value = false;
   Object.assign(home, emptyHome);
 };
-
 const sendCommand = (command: string) => {
   window.ipcRenderer.send('command', command)
 };
@@ -72,50 +75,68 @@ onMounted(() => {
 
   window.ipcRenderer.on('dir-set', (event, args) => {
     savedir.value = args
-  })
-
+  });
   window.ipcRenderer.on('add-extracted', (event, args) => {
-    console.log('add-extracted', args);
     window.ipcRenderer.send('add-extracted', args);
-  })
+  });
 
   window.ipcRenderer.on('loading', (event, args) => {
     loading.value = args
-  })
+  });
   window.ipcRenderer.on('status', (event, args) => {
     status.value = args
-  })
+  });
   window.ipcRenderer.on('loop-status', (event, args) => {
     loopstatus.value = args
-  })
+  });
 
   window.ipcRenderer.on('properties-set', (event, args) => {
     properties.value = args
-  })
+  });
   window.ipcRenderer.on('errors', (event, args) => {
     errors.value = args
-  })
+  });
 
   window.ipcRenderer.on('receive-start-url', (event, args) => {
-    country.value = args
+    country.value = args;
     sendCommand('count');
-  })
+  });
+  window.ipcRenderer.on('receive-start-site', (event, args) => {
+    site.value = args
+  });
   window.ipcRenderer.on('set-found', (event, args) => {
     if(args < loop.value) {
       loop.value = args;
     }
-  })
+  });
 
 });
 
-function onSelectChange(value: string) {
-  loop.value = 99;
-  window.ipcRenderer.send('set-start-url', value);
+function onSelectChange(change: any) {
+  if(!isNaN(change)) {
+    loop.value = 99;
+    country.value = change;
+    window.ipcRenderer.send('set-start-url', country.value);
+  } else {
+    country.value = '0'
+  }
+  
+  
 }
+function onSelectSiteChange(sel: string) {
+  if(sel === 'skiinluxury') {
+    countries.value = data['skiinluxury'];
+  } else if(sel === 'alpsinluxury') {
+    countries.value = data['alpsinluxury'];
+  } else {
+    countries.value = [];
+  }
 
+  window.ipcRenderer.send('set-start-site', sel);
+  window.ipcRenderer.send('set-start-url', '0');
+}
 // ########### Watchers ###########
 watch(loop, (newloop: number) => {
-  console.log('set loop', newloop);
   window.ipcRenderer.send('set-loop', newloop);
   setTimeout(() => {
     sendCommand('loops');
@@ -124,7 +145,7 @@ watch(loop, (newloop: number) => {
 </script>
 
 <template>
-  <div class="flex mb-4 gap-3">
+  <div class="flex items-center gap-3 mb-4">
     <div class="flex-1">
       <div class="block">{{ status }} <span class="text-red-600">{{ errors }}</span></div>
       <div class="block text-xs text-pink-300">{{ loopstatus }}</div>
@@ -135,24 +156,40 @@ watch(loop, (newloop: number) => {
         <save-outlined class="text-lg text-red-600" v-else/>
       </a-tooltip>
     </div>
-    <div class="flex-2">
-      <a-tree-select
-        v-model:value="country"
-        style="width: 300px"
-        :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-        placeholder="Select location"
-        tree-default-expand-all
-        :tree-data="countries"
-        tree-node-filter-prop="label"
-        :status="warning ? 'error' : null"
-        @change="onSelectChange"
-      >
-      </a-tree-select>
+    <div class="flex gap-3">
+      <div>
+        <a-select
+          v-model:value="site"
+          style="width: 160px"
+          :dropdown-style="{ maxHeight: '200px', overflow: 'auto' }"
+          placeholder="Select site"
+          tree-default-expand-all
+          :options="sites"
+          @change="onSelectSiteChange"
+        >
+        </a-select>
+      </div>
+      <div>
+        <a-tree-select
+          v-if="countries.length > 0"
+          v-model:value="country"
+          style="width: 300px"
+          :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
+          placeholder="Select location"
+          tree-default-expand-all
+          :tree-data="countries"
+          tree-node-filter-prop="label"
+          :status="warning ? 'error' : null"
+          @change="onSelectChange"
+        >
+        </a-tree-select>
+      </div>
     </div>
     <div class="flex-2">
       <a-button type="primary" :loading="loading" @click="sendCommand('getAllLinks')" :disabled="savedir === null || warning">
-        <span v-if="warning">Invalid location</span>
-        <span v-else>Extract Resort #{{ country }}</span>
+        <span v-if="warning === true">Invalid location</span>
+        <span v-if="warning === false">Extract Resort #{{ country }}</span>
+        
       </a-button>
     </div>
     
@@ -226,7 +263,7 @@ watch(loop, (newloop: number) => {
       <a-carousel autoplay>
         <a-image v-for="(img, index) in home.images" :key="index"  :src="'media:\\' + `${img.path + img.filename}`" alt="Image" width="100%" height="250px" class="w-full h-[250px] object-cover" />
       </a-carousel>
-      <h2 class="font-bold text-xl mb-2">Summary</h2>
+      <h2 class="mb-2 text-xl font-bold">Summary</h2>
       <div class="mb-4">
         <div v-for="(summary, index) in home.summary" :key="index" class="inline-block mb-2">
           <a-tag :bordered="false" class="">{{ summary }}</a-tag>
@@ -237,9 +274,9 @@ watch(loop, (newloop: number) => {
         <br>
         {{ home.latlng }}
       </div>
-      <h2 class="font-bold text-xl mb-5">Description</h2>
+      <h2 class="mb-5 text-xl font-bold">Description</h2>
       <div v-html="home.description_html" class="mb-5"></div>
-      <h2 class="font-bold text-xl mb-2">Amenities</h2>
+      <h2 class="mb-2 text-xl font-bold">Amenities</h2>
       <div v-for="(amenity, index) in home.amenities" :key="index" class="inline-block mb-2">
         <a-tag> {{ amenity }} </a-tag>
       </div>

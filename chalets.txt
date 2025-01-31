@@ -4,16 +4,8 @@
     "value": "All France",
     "children": [
       {
-        "label": "Alpe d'Huez",
-        "value": "1"
-      },
-      {
         "label": "Argentiere",
         "value": "18"
-      },
-      {
-        "label": "Avoriaz",
-        "value": "96"
       },
       {
         "label": "Chamonix",
@@ -24,32 +16,8 @@
         "value": "31"
       },
       {
-        "label": "Courchevel 1850",
-        "value": "10"
-      },
-      {
-        "label": "Courchevel Le Praz",
-        "value": "35"
-      },
-      {
-        "label": "Courchevel Moriond",
-        "value": "57"
-      },
-      {
-        "label": "Courchevel Village",
-        "value": "83"
-      },
-      {
         "label": "La Clusaz",
         "value": "52"
-      },
-      {
-        "label": "La Tania",
-        "value": "32"
-      },
-      {
-        "label": "Les Arcs",
-        "value": "27"
       },
       {
         "label": "Les Gets",
@@ -94,10 +62,6 @@
       {
         "label": "Val d'Isere",
         "value": "2"
-      },
-      {
-        "label": "Val Thorens",
-        "value": "21"
       }
     ]
   },
@@ -106,16 +70,8 @@
     "value": "All Switzerland",
     "children": [
       {
-        "label": "Andermatt",
-        "value": "95"
-      },
-      {
         "label": "Crans Montana",
         "value": "61"
-      },
-      {
-        "label": "Davos",
-        "value": "28"
       },
       {
         "label": "Grindelwald",
@@ -128,10 +84,6 @@
       {
         "label": "Klosters",
         "value": "3"
-      },
-      {
-        "label": "Nendaz",
-        "value": "59"
       },
       {
         "label": "Saas Fee",
@@ -170,14 +122,6 @@
       {
         "label": "St Anton",
         "value": "24"
-      },
-      {
-        "label": "St Christoph",
-        "value": "38"
-      },
-      {
-        "label": "Zurs",
-        "value": "68"
       }
     ]
   },
@@ -196,10 +140,6 @@
       {
         "label": "Brunico",
         "value": "82"
-      },
-      {
-        "label": "Canazei",
-        "value": "401"
       },
       {
         "label": "Cervinia",
@@ -228,20 +168,6 @@
       {
         "label": "Sestriere",
         "value": "386"
-      }
-    ]
-  },
-  {
-    "label": "All Canada",
-    "value": "All Canada",
-    "children": [
-      {
-        "label": "Revelstoke",
-        "value": "86"
-      },
-      {
-        "label": "Whistler",
-        "value": "220"
       }
     ]
   }

@@ -16,11 +16,14 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
     }
     async function countHomes($loops = 12) {
         //@ts-ignore
-        const ids = store.get('extracted') || [];
+        //const ids = store.get('extracted') || [];
         //@ts-ignore
         const urltoextract = store.get('urltoextract') || '';
-        const dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}`;
-
+        //@ts-ignore
+        const mainurl = store.get('mainurl');
+        
+        
+        const dataurl = `${mainurl}/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}`;
         sender.send('loading', true);
         const { data } = await axios.get(dataurl);
         const $ = cheerio.load(data);
@@ -35,13 +38,16 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
 
         //@ts-ignore
         const urltoextract = store.get('urltoextract') || null;
+
+        //@ts-ignore
+        const mainurl = store.get('mainurl'); const site = store.get('site');
+
         var dataurl
         if(ids.length > 0) {
-            dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}&loadmore_seen=${ids.join(',')}`;
+            dataurl = `${mainurl}/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}&loadmore_seen=${ids.join(',')}`;
         } else {
-            dataurl = `https://www.skiinluxury.com/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}`;
+            dataurl = `${mainurl}/chalets/search/limit:${$loops}?referer=resort_chalets&resortName[]=${urltoextract}`;
         }
-        //console.log('dataurl', dataurl);
         //@ts-ignore
         //const homes = store.get('homes') || [];
         //console.log('ids', ids);
@@ -57,9 +63,10 @@ export const useScraper = (sender: any, db: any, dbPath: string, saveDir) => {
         const extractedids = [];
         for (const value of items) {
             const id = $(value).attr('id');
+            
             if(id && !ids.includes(id)) {
                 loopnum++;
-                const fullPath = saveDir + sep + id;
+                const fullPath = saveDir + sep + id + "-" + site;
                 const textfilename = fullPath + sep + 'item.txt';
                 try {
                     mkdirSync(fullPath, { recursive: true });
@@ -90,10 +97,20 @@ Summary:
 `;
                 const h = cheerio.load($(value).html());
                 const url = h('a.chaletClick.active').attr('href');
-                const name = h('h2.chalet-listing__title').text();
+                let name = 'h2.chalet-listing__title';
+                let location = 'p.chalet-listing__location';
+                if(site === 'alpsinluxury') {
+                    name = h('h2.chalet-pod__title').text();
+                    location = h('p.chalet-pod__location').text();
+                } else {
+                    name = h(name).text();
+                    location = h(location).text();
+                }
+                
+                
                 sender.send('status', `Extracting ${name}`);
                 sender.send('loop-status',`Extracting loop: ${loopnum}  out of ${$loops}`);
-                const location = h('p.chalet-listing__location').text();
+                
                 const { data } = await axios.get(url);
                 const itm = cheerio.load(data);
                 //property-section
@@ -113,6 +130,9 @@ Summary:
                     return $(this).text();
                 }).get();
                 
+                
+
+
                 textfile = textfile.replace('{title}', name);
                 textfile = textfile.replace('{location}', location);
                 textfile = textfile.replace('{latlng}', latlng);
@@ -138,9 +158,18 @@ Summary:
                     images: [],
                     created: new Date().toLocaleString(),
                 };
-
-                const imgssss = itm('a.swiper-slide.chalet-hero__image-link').map(function() {
-                    const imgurl    =  itm(this).attr('href');
+                let imgclass = 'a.swiper-slide.chalet-hero__image-link';
+                let imgattr = 'href';
+                if(site === 'alpsinluxury') {
+                    imgclass = 'a.swiper-slide'
+                    imgattr = 'style'
+                }
+                const imgssss = itm(imgclass).map(function() {
+                    let imgurl    =  itm(this).attr(imgattr);
+                    if(site === 'alpsinluxury') {
+                        imgurl = imgurl.match(/'(.*?)'/g)[0];
+                        imgurl = imgurl.substring(1, imgurl.length - 1);
+                    }
                     let imgfilen    = imgurl.split('/').pop();
                     imgfilen        = newhome.path + imgfilen;
                     const imgpath   = fullPath + sep;
@@ -154,7 +183,6 @@ Summary:
                         photoimg,
                     };
                 }).get();
-                
                 for (const img of imgssss) {
                     const { photoimg, url } = img;
                     if (!existsSync(photoimg)) {

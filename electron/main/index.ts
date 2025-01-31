@@ -234,12 +234,26 @@ ipcMain.on('delete-home', (event, args) => {
 
 
 ipcMain.on('set-start-url', (event, args) => {
+  if(args == '' || args == '0' || args === 0) {
+    //@ts-ignore
+    store.set('urltoextract', args);
+  }
+
   //@ts-ignore
   store.set('urltoextract', args)
   //@ts-ignore
   let url = store.get('urltoextract');
   event.sender.send('receive-start-url', url);
 });
+
+ipcMain.on('set-start-site', (event, args) => {
+  if(args === 'alpsinluxury' || args === 'skiinluxury') {
+    //@ts-ignore
+    store.set('site', args); store.set('mainurl', `https://www.${args}.com`);
+    event.sender.send('receive-start-site', args);
+  }
+});
+
 ipcMain.on('open-dir', (event, args) => {
   const { dir, url } = args;
   if(dir !== null) {
@@ -276,13 +290,12 @@ ipcMain.on('set-dir', (event, args) => {
   });
 });
 
-
-
 ipcMain.on('check-db', (event, args) => {
   //@ts-ignore
-  let url = store.get('urltoextract');
+  let url = store.get('urltoextract'), site = store.get('main');
+
   if(url !== null || url !== '' && url !== undefined) {
-    event.sender.send('receive-start-url', url);
+    event.sender.send('receive-start-site', site);
   }
 
   const version = app.getVersion();
@@ -320,6 +333,8 @@ ipcMain.on('command', (event, args) => {
     // })
   } else if(args === 'count') {
     event.sender.send('status','Counting properties...');
+    //@ts-ignore
+    const mainurl = store.get('mainurl');
     countHomes(totalLoops);
   } else if(args === 'init') {
     event.sender.send('status','Initializing...');

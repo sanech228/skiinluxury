@@ -1,5 +1,8 @@
 # Logs
 logs
+chalets.txt
+test.js
+
 *.log
 npm-debug.log*
 yarn-debug.log*
